@@ -1,0 +1,17 @@
+public Collection<String> countPatientsPerSpecialization(){
+   		List<String> str = PtoD.entrySet().stream().collect(Collectors.groupingBy(s->getD(s.getValue()).getSpecialization(), Collectors.counting())).entrySet().stream().map(m->String.format("%3d", m.getValue())+" - "+m.getKey()).collect(Collectors.toList());
+
+		str.sort(Comparator.comparing(s->getNumPatSpec(s.toString())).reversed().thenComparing(s->getSpec(s.toString())));
+
+		return str;
+	}
+
+	public String getNumPatSpec(String str) {
+		String[] v = str.split("-");
+		return v[0];
+	}
+
+	public String getSpec(String str) {
+		String[] v = str.split("-");
+		return v[1];
+	}
