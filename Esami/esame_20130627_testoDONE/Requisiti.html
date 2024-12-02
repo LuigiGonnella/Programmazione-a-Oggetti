@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<body>
+<h1 style="text-align: center;">Azienda agricola<br>
+</h1>
+Sviluppare un'applicazione che consenta di gestire le informazioni relative ai raccolti di una azienda agricola. Tutte le classi devono essere nel package "aziendaagricola".<br>
+
+<hr style="width: 100%; height: 2px;">
+
+<h2>R1 - Zone</h2>
+La classe principale con cui interagire e' Azienda. L'azienda e' organizzata in zone. Mediante il metodo <B>aggiungiZona()</B> e' possibile aggiungere una nuova zona. Il metodo associa
+alla zona un codice numerico generato automaticamente in maniera progressiva a partire da 1000 e restitisce un oggetto della
+classe Zona. <BR>
+Ogni zona e' caratterizzata da una ampiezza, una temperatura media ed un valore di irraggiamento medio. La classe Zona
+offre metodi getter e setter per accedere in lettura e scrittura a tali informazioni.<BR> 
+Ogni zona e' inoltre caratterizzata da un elenco di caratteristiche fisico-chimiche del terreno. Il metodo <B>specificaCaratteristicheZona()</B> 
+della classe Azienda riceve come parametro un codice che identifica la zona ed un oggetto String che descrive una particolare caratteristica, ed aggiunge tale
+caratteristica a quelle eventualmente gia' associate alla particolare zona. Nel caso di caratteristica gia' presente, la chiamata al suddetto 
+metodo non sortisce alcun effetto.</BR>
+Mediante il metodo <B>elencoCaratteristiche()</B> della classe Zona e' possibile ottenere l'elenco alfabetico delle caratteristiche specificate per la zona.<BR>
+Il metodo <B>elencoZone()</B> della classe Azienda restituisce un elenco di zone ordinate in base al codice. Esiste una variante di tale metodo 
+che riceve come parametro un'ampiezza di riferimento e restituisce un elenco delle sole zone la cui ampiezza e' maggiore di quella indicata (con lo stesso ordinamento).<BR>
+E' inoltre possibile accedere ad una particolare zona mediante il metodo <B>cercaZona()</B> della classe Azienda, che riceve come parametro un codice 
+che identifica la zona cercata e restituisce l'oggetto Zona corrispondente. Nel caso in cui la zona cercata non esista, questa viene 
+automaticamente creata (e restituita come valore di ritorno del metodo). 
+
+<h2>R2 - Coltivazioni</h2>
+
+Per ogni zona sono possibili, nei diversi mesi dell'anno, diverse coltivazioni, ciascuna rappresentata da un oggetto di classe Coltivazione. 
+Per aggiungere una nuova coltivazione ad una zona si utilizza il metodo <B>aggiungiColtivazione()</B> della classe Zona. Il metodo riceve come parametro il nome
+del prodotto coltivato (che identifica in modo univoco la coltivazione per quella particolare zona), il mese di semina ed il mese di raccolta 
+(questi ultimi espressi con un numero intero tra 1 e 12) e restituisce un oggetto di classe Coltivazione.<BR>
+Nel caso in cui esista gia' una coltivazione in quella zona per lo stesso prodotto con lo stesso mese di semina, viene scatenata una 
+eccezione di tipo ColtivazioneDuplicataException e la coltivazione non viene aggiunta. Altrimenti viene restituito l'oggetto di classe 
+Coltivazione corrispondente.<BR>
+Mediante il metodo <B>elencoColtivazioni()</B> della classe Zona e' possibile ottenere l'elenco delle coltivazioni, nell'ordine in cui queste sono state
+aggiunte.<BR>
+Il metodo <B>richiedeFertilizzante()</B> della classe Coltivazione permette di specificare i fertilizzanti eventualmente necessari per la 
+particolare coltivazione in quella zona. I fertilizzanti, naturali o artificiali, sono rappresentanti rispettivamente dalle classi FertilizzanteNaturale e 
+FertilizzanteArtificiale, specializzazioni della classe Fertilizzante.  Il metodo riceve come parametri il tipo ('N', per naturale o 'A', per 
+artificiale), il nome ed il costo del fertilizzante, oltre alla periodicita' di impiego e la quantita' necessaria, e restituisce come parametro 
+un oggetto della classe corrispondente a quella specificata.  
+<BR>
+Per i fertilizzanti artificiali, il metodo <B>setRischio()</B> permette di specificare un valore intero che ne caratterizza il livello di 
+rischio ambientale. Il corrispondente metodo getter consente di accedere in lettura a tale informazione.<BR>
+
+<h2>R3 - Raccolti</h2>
+
+Il metodo <B>nuovoRaccolto()</B> della classe Zona permette di definire le informazioni relative ad un nuovo raccolto. Il metodo riceve come
+parametri il nome del prodotto corrispondente alla coltivazione, una data espressa come oggetto String nel formato AAAA-MM-GG (che, assieme 
+al nome del prodotto identificano univocamente il raccolto) ed una quantita' prodotta, e restituisce
+un oggetto di classe Raccolto. Mediante opportuni metodi getter e setter della classe Raccolto e' possibile accedere in lettura e scrittura alle
+informazioni relative al prezzo all'ingrosso definito per il raccolto. <BR>
+Il metodo <B>cercaRaccolto()</B> della classe Zona riceve come parametro il nome di un prodotto e una data e restituisce l'oggetto di classe Raccolto 
+corrispondente. Mediante il metodo <B>elencoRaccolti()</B> della classe Zona e' invece possibile ottenere l'elenco dei raccolti per la particolare
+zona, ordinati cronologicamente per data e, nel caso di raccolti riferiti alla stessa data, per quantita' prodotta.
+<BR>
+Ciascun raccolto viene singolarmente trasferito presso magazzini di stoccaggio esterni all'azienda, ciascuno identificato univocamente dal nome. 
+Il metodo <B>aggiungiMagazzino()</B> della classe Azienda permette di aggiungere un nuovo magazzino all'azienda. Il metodo riceve come parametri il
+nome del magazzino, il nome del prodotto stoccato e la quantita' massima stoccabile, e restituisce l'oggetto di classe Magazzino corrispondente.<BR> 
+Il metodo <B>stocca()</B> della classe Magazzino riceve come parametro un oggetto di classe Raccolto e consente di stoccare il relativo prodotto. 
+Nel caso in cui la tipologia di prodotto non sia compatibile con quella specificata per il magazzino viene scatenata una eccezione di 
+tipo ProdottoNonCompatibileException. Sono possibili stoccaggi completi o parziali. In entrambi i casi, la chiamata al metodo aggiorna la
+quantita' stoccata in maniera opportuna (senza che questa possa mai superare la quantita' massima stoccabile). Nel caso di stoccaggio completo
+il metodo restituisce la quantita' ancora stoccabile. Nel caso di stoccaggio parziale restituisce invece un valore negativo, che indica
+il prodotto in eccesso (che non e' stato possibile stoccare). Il metodo <B>preleva()</B> permette invece di prelevare la quantita' di prodotto passata come parametro.
+<BR> 
+Il metodo <B>totaleMagazzini()</B> della classe Azienda permette di calcolare la quantita' totale di prodotto stoccata nei vari magazzini (senza distinguere
+in base al tipo di prodotto). 
+<BR>
+
+
+<h2>R4 - Caricamento da file </h2>
+Il metodo <B>leggi()</B> della classe Azienda permette di leggere da file le informazioni relative ai raccolti, aggiornando in maniera 
+opportuna la struttura dati realizzata.<BR>
+Il metodo riceve come parametro il percorso di un file testuale organizzato a righe, dove ogni riga puo' riportare le informazioni relative 
+ad una coltivazione o un raccolto. Si assuma che le informazioni siano separate da un punto e virgola.<BR>
+Le righe relative ad una coltivazione iniziano con la lettera "C", seguita dal codice identificativo della zona, dal nome del prodotto coltivato, dal mese di
+semina e dal mese di raccolta.<BR>
+Le righe relative ai raccolti cominciano con una "R", seguita dal codice identificativo della zona, dal nome del prodotto coltivato, dalla data e dalla 
+quantita' prodotta.<BR>
+Si assuma che il file non possa contenere errori e che quindi tutte le righe rispettino il formato sopra descritto.
+
+<hr style="width: 100%; height: 2px;"><br>
+</body>
+</html>

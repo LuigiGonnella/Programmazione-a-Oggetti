@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<body>
+<h1 style="text-align: center;">Ufficio tecnico comunale<br>
+</h1>
+Sviluppare un'applicazione che consenta, ad esempio ad un ufficio tecnico comunale, di gestire le informazioni relative agli 
+elementi topografici di una citta'. Tutte le classi devono essere nel package "ufficiotecnico".<br>
+
+<hr style="width: 100%; height: 2px;">
+
+<h2>R1 - Elementi topografici</h2>
+La classe principale con cui interagire e' BasiDatiTopografica. La base dati raccoglie le informazioni relative ai diversi elementi
+topografici della citta', ovvero strade e piazze, ciascuno rappresentato rispettivamente da un oggetto di classe Strada o Piazza 
+(specializzazioni della classe ElementoTopografico). <BR>
+Mediante il metodo <B>aggiungiElementoTopografico()</B> della classe BaseDatiTopografica e' possibile aggiungere un nuovo elemento.
+Il metodo riceve come parametro una stringa che indica la tipologia dell'elemento da aggiungere, ovvero "strada" o "piazza" 
+(accettando qualsiasi combinazione di caratteri maiuscoli e minuscoli). Il metodo restituisce un riferimento all'oggetto creato, 
+e associa all'elemento aggiunto un codice numerico generato automaticamente in maniera progressiva a partire da 1 per le strade 
+e da 10001 per le piazze (si assuma semplicemente che non vi possano essere piu' di 10000 strade).<BR> 
+Ogni elemento topografico e' caratterizzato da un nome. Inoltre, per ogni strada la base dati registra la lunghezza. Per ogni piazza
+tiene invece traccia di forma ed estensione. Le suddette classi dispongono dei metodi getter e setter per accedere in lettura 
+ed in scrittura alle informazioni precedentemente menzionate.<BR>
+Mediante il metodo <B>elencoElementiTopografici()</B> della classe BaseDatiTopografica e' possibile ottenere l'elenco alfabetico
+degli elementi topografici aggiunti. Il metodo <B>elencoPiazze()</B> consente invece di ottenere, con lo stesso ordinamento, l'elenco
+delle sole piazze. I metodi <B>elencoStradePerNome()</B> ed <B>elencoStradePerLunghezza()</B> restituiscono l'elenco delle 
+sole strade ordinate rispettivamente per nome e per lunghezza decrescente (dalla piu' lunga alla piu' corta, quindi).<BR> 
+E' inoltre possibile accedere ad un particolare elemento topografico mediante il metodo <B>cercaElementoTopografico()</B> della classe 
+BaseDatiTopografica, il quale riceve come parametro un codice che identifica l'elemento cercato e restituisce l'oggetto 
+corrispondente. Se l'elemento non esiste viene scatenata un'eccezione di tipo EccezioneElementoTopograficoInesistente. Infine, 
+il metodo <B>estensionePiazze()</B> della classe BaseDatiTopografica consente di calcolare l'estensione complessiva delle piazze 
+in citta'.
+
+<h2>R2 - Monumenti</h2>
+
+Una piazza puo' contenere uno o piu' monumenti, ciascuno rappresentato da un oggetto di classe Monumento ed identificato dal nome 
+del personaggio (o del fatto) che rappresenta. Per aggiungere un nuovo monumento ad una piazza e' possibile utilizzare il metodo 
+<B>aggiungiMonumento()</B> della classe Piazza, che riceve come parametro il personaggio o il fatto rappresentato, la data di
+inaugurazione, il nome dell'artista ed un carattere maiuscolo che indica la posizione nella piazza ('N' per Nord,'S' per Sud,'E' per Est,'O' per Ovest e 
+'C' per Centro). Si noti che non e' possibile aggiungere piu' di un monumento nella stessa posizione (tentando quindi di 
+aggiungere un monumento in una posizione gia' occupata il nuovo monumento rimpiazzera' il precedente). Il metodo restituisce
+un riferimento al nuovo monumento aggiunto. La classe Monumento dispone di opportuni metodi getter per accedere alle  
+informazioni relative allo stesso.<BR> 
+Il metodo <B>aggiungiMateriale</B> della classe Monumento permette di specificare i materiali con cui il monumento e' stato 
+costruito. Il metodo <B>elencoMateriali()</B> restituisce l'elenco  dei materiali nell'ordine in cui questi sono stati aggiunti.</BR>
+Il metodo <B>elencoMonumenti()</B> della classe BaseDatiTopografica riceve come parametro il codice di una piazza e 
+restituisce l'elenco dei monumenti presenti, ordinati in base alla data di inaugurazione, nel formato AAAA-MM-GG (o l'eccezione
+EccezioneElementoTopograficoInesistente nel caso in cui il codice passato non corrisponda ad una piazza esistente).<BR>
+Il metodo <B>monumentoPresenteInPosizione()</B> della classe Piazza riceve come parametro un carattere che identifica una particolare
+posizione nella piazza e restituisce true nel caso in cui la posizione specificata contenga 
+un monumento, false altrimenti.</BR>
+
+<h2>R3 - Incroci</h2>
+
+La base dati memorizza, per ogni strada, l'informazione su quali altre strade incroci e su quali piazze eventualmente sfoci. 
+Ogni incrocio strada-strada e strada-piazza/piazza-strada puo' essere controllato da semafori. Per definire un nuovo incrocio e' possibile
+utilizzare il metodo <B>definisciIncrocio()</B> della classe BaseDatiTopografica, che riceve come parametri il codice dei 
+due elementi topografici coinvolti nell'incrocio ed un valore boolean che indica la presenza o meno di semafori.
+Nel caso in cui i codici passati non siano validi viene scatenata una eccezione di tipo EccezioneElementoTopograficoInesistente. 
+Nel caso di incrocio di tipo piazza-piazza viene invece scatenata una eccezione di tipo 
+EccezioneIncrocioImpossibile.<BR>
+Il metodo <B>eliminaIncrocio()</B> permette di eliminare un incrocio precedentemente definito. Il metodo riceve come parametri
+il codice dei due elementi topografici coinvolti e restituisce true nel caso in cui l'incrocio fosse presente e sia stato
+correttamente eliminato, false altrimenti (scatenando un'eccezione di tipo EccezioneElementoTopograficoInesistente
+in caso di codice non valido).<BR>
+Il metodo <B>elencoIncroci()</B> della classe BaseDatiTopografica permette di ottenere l'elenco di tutte le strade e piazze
+incrociate dall'elemento topografico il cui codice e' passato come parametro (prima le strade, in ordine alfabetico, poi le 
+piazze, sempre in ordine alfabetico). In caso di codice non valido viene scatenata una eccezione di tipo 
+EccezioneElementoTopograficoInesistente. <BR>
+
+<h2>R4 - Caricamento da file </h2>
+Il metodo <B>leggi()</B> della classe BaseDatiTopografica permette di leggere da file alcune informazioni relative agli elementi
+topografici ed ai relativi incroci, aggiornando in maniera opportuna la struttura dati realizzata.<BR>
+Il metodo riceve come parametro il percorso di un file testuale organizzato a righe, dove ogni riga puo' riportare le informazioni relative 
+ad una strada, una piazza od un incrocio. Si assuma che le informazioni siano separate da un punto e virgola.<BR>
+Le righe relative alle strade iniziano con la stringa "strada", seguita dal nome e dalla lunghezza. Quelle relative alle piazze 
+cominciano con la stringa "piazza", seguita dal nome, dalla forma e dall'estensione. Infine, quelle relative agli incroci 
+cominciano con la stringa "incrocio", seguita dai codici che identificano i due elementi coinvolti ed un valore booleano 
+che indica la presenza o meno di semafori.<BR>
+Si assuma che il file non possa contenere errori e che quindi tutte le righe rispettino il formato sopra descritto. Si gestiscano
+eventuali eccezioni derivanti dalla lettura di codici di elementi topografici non validi o di incroci impossibili.
+
+<hr style="width: 100%; height: 2px;"><br>
+</body>
+</html>
+

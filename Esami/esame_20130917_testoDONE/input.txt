@@ -1,0 +1,8 @@
+strada;Aosta, Via;500
+piazza;Cuneo, Piazza;triangolare;10000
+incrocio;2;10003;true
+strada;Milano, Corso;16000
+strada;Palermo, Via;1200
+incrocio;10001;4;false
+incrocio;5;10001;false
+incrocio;5;6;true
